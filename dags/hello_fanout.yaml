@@ -1,0 +1,23 @@
+name: "Hello Fanout DAG"
+description: "A simple DAG that demonstrates fanout execution across multiple nodes"
+
+tasks:
+  - id: "init"
+    module: "init.wasm"
+    inputs: []
+    depends_on: []
+
+  - id: "greet_1"
+    module: "greet_1.wasm"
+    inputs: ["Hello", "World"]
+    depends_on: ["init"]
+
+  - id: "greet_2"
+    module: "greet_2.wasm"
+    inputs: ["Hola", "Mundo"]
+    depends_on: ["init"]
+
+  - id: "aggregate"
+    module: "aggregate.wasm"
+    inputs: ["greet_1", "greet_2"]
+    depends_on: ["greet_1", "greet_2"]
